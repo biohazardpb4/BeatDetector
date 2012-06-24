@@ -8,7 +8,9 @@
 
 int main(int argc, char **argv)
 {
-	MP3Decoder d = MP3Decoder("suckit2.mp3");
+	MP3Decoder d = MP3Decoder();
+	d.loadFile(argv[1]);
+	short * samples = d.getSampleBuffer();
 
 	return EXIT_SUCCESS;
 }

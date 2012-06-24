@@ -8,20 +8,46 @@
 
 #include "MP3Decoder.h"
 
-MP3Decoder::MP3Decoder(std::string fpath) {
-	printf("MP3Decoder decoding file at: %s", fpath.c_str());
+///////////////////////////// public functions below //////////////////////////
+
+MP3Decoder::MP3Decoder() {
+	// initialize the mp3 file
+	mp3File.handle = NULL;
+	mp3File.buffer = NULL;
+
+	printf("MP3Decoder created\n");
 }
 
 MP3Decoder::~MP3Decoder() {
-
+	this->closeFile();
 }
 
-// loads the mp3 file passed into the constructor
-void MP3Decoder::load() {
+void MP3Decoder::loadFile(char * fpath) {
+	printf("loading %s\n", fpath);
+}
 
+short* MP3Decoder::getSampleBuffer() {
+	printf("retrieving sample buffer\n");
+	return 0;
+}
 
+///////////////////////////// end of public functions /////////////////////////
+///////////////////////////// private functions below /////////////////////////
 
-	mpg123_close(mp3File.handle);
-	mpg123_delete(mp3File.handle);
+inline int MP3Decoder::readBuffer() {
+	return 0;
+}
+
+inline long MP3Decoder::openFile(char *) {
+	return 0;
+}
+
+// close the currently stored mp3 file
+void MP3Decoder::closeFile() {
+	if(mp3File.handle != NULL) {
+		free(mp3File.buffer);
+		mpg123_close(mp3File.handle);
+		mpg123_delete(mp3File.handle);
+	}
 	mpg123_exit();
 }

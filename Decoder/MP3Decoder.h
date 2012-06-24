@@ -13,7 +13,7 @@
 
 class MP3Decoder {
 private:
-	struct Mp3File
+	struct MP3File
 	{
 	        mpg123_handle* handle;
 	        int channels;
@@ -24,16 +24,21 @@ private:
 	        int leftSamples;
 	        int offset;
 	};
-
-	Mp3File mp3File;
+	
+	// our current mp3 file
+	MP3File mp3File;
+	inline int readBuffer();
+	inline long openFile(char *);
+	inline void closeFile();
 
 public:
 	// da structors
-	MP3Decoder(std::string);
+	MP3Decoder();
 	virtual ~MP3Decoder();
 
-	// loads the file passed in
-	void load();
+	// loads the file passed in	
+	void loadFile(char *);
+	short * getSampleBuffer();
 };
 
 #endif /* MP3DECODER_H_ */
