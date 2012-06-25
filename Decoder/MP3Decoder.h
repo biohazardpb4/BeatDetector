@@ -4,8 +4,6 @@
  *  Created on: Jun 23, 2012
  *      Author: jay
  */
-#include <string>
-
 #include "mpg123.h"
 
 #ifndef MP3DECODER_H_
@@ -28,8 +26,8 @@ private:
 	// our current mp3 file
 	MP3File mp3File;
 	inline int readBuffer();
-	inline long openFile(char *);
-	inline void closeFile();
+	inline void openFile(char *);
+	void cleanup(mpg123_handle *);
 
 public:
 	// da structors
@@ -38,7 +36,8 @@ public:
 
 	// loads the file passed in	
 	void loadFile(char *);
-	short * getSampleBuffer();
+	unsigned char * getSampleBuffer();
+	size_t getSampleBufferSize();
 };
 
 #endif /* MP3DECODER_H_ */

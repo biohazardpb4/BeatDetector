@@ -13,7 +13,7 @@ compile = $(CXX) $(CPPFLAGS) $(CFLAGS) $(MPG123_CFLAGS)
 linkflags = $(MPG123_LDFLAGS) $(LDFLAGS)
 
 BeatDetector: BeatDetector.cpp
-		$(compile) -o BeatDetector BeatDetector.cpp Decoder/MP3Decoder.cpp $(linkflags)
+		$(compile) -o BeatDetector BeatDetector.cpp Decoder/MP3Decoder.cpp Algorithm/Algorithm.cpp $(linkflags)
 
 clean:
 		rm -vf $(targets)
