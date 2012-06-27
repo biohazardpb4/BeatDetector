@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <Phonon>
+#include <phonon>
+#include <phonon/mediaobject.h>
 
 #include "Decoder/MP3Decoder.h"
 #include "Algorithm/Algorithm.h"
