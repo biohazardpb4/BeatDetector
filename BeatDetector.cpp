@@ -3,9 +3,13 @@
 */
 
 #include <stdio.h>
+#include <iostream>
+#include <Phonon>
 
 #include "Decoder/MP3Decoder.h"
 #include "Algorithm/Algorithm.h"
+
+static const int NUM_ALGOS = 1;
 
 int main(int argc, char **argv)
 {
@@ -15,10 +19,23 @@ int main(int argc, char **argv)
 	unsigned char * samples = d.getSampleBuffer();
 	int numSamples = d.getSampleBufferSize();
 
-	// make an algorithm
-	Algorithm a = Algorithm();
-	Algorithm::setSampleBuffer(samples, numSamples);
-	a.process();
+	// make an array of algos
+	Algorithm* algos[NUM_ALGOS];
+
+	// set different algos
+	algos[0] = new SimplePowerHistory();
+
+	/*for(int i = 0; i < NUM_ALGOS; i++) {
+		Algorithm::setSampleBuffer(samples, numSamples);
+		algos[i]->process();
+	}*/
+
+	Phonon::MediaObject *music =
+		Phonon::createPlayer(Phonon::MusicCategory,
+			Phonon::MediaSource(argv[1]));
+	music->play();
+
+	std::cin.get();
 
 	return EXIT_SUCCESS;
 }

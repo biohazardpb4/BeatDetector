@@ -18,7 +18,3 @@ void Algorithm::setSampleBuffer(unsigned char * buf, long size) {
 	sampleDataSize = size;
 }
 
-void Algorithm::process() {
-	for(int i = 0; i < sampleDataSize; i++)
-		printf("algo sample: %d is %d\n", i, sampleData[i]);	
-}
