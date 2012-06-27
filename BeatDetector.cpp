@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <QApplication>
 #include <phonon>
 #include <phonon/mediaobject.h>
 
@@ -31,6 +32,9 @@ int main(int argc, char **argv)
 		algos[i]->process();
 	}*/
 
+	// phonon setup
+	QApplication app(argc, argv);
+	app.setApplicationName("BeatDetector");
 	Phonon::MediaObject *music =
 		Phonon::createPlayer(Phonon::MusicCategory,
 			Phonon::MediaSource(argv[1]));
