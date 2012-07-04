@@ -8,6 +8,8 @@
 #ifndef ALGORITHM_H_
 #define ALGORITHM_H_
 
+#include <stdio.h>
+
 class Algorithm {
 protected:
 	static unsigned char * sampleData;
@@ -26,7 +28,7 @@ class SimplePowerHistory : public Algorithm {
 public:
 	virtual void process() {
 		for(int i = 0; i < sampleDataSize; i++)
-			printf("power history algo: %d is %d\n", i, sampleData[i]);
+            printf("power history algo: %d is %d\n", i, sampleData[i]);
 	}
 };
 

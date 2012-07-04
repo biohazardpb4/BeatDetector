@@ -6,19 +6,25 @@
 
 QT       += core gui
 
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += libmpg123
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += sndfile
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += phonon
+
 TARGET = BeatDetector
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         qtmain.cpp \
     Algorithm/Algorithm.cpp \
-    Decoder/Mpg123Decoder.cpp \
     Decoder/MP3Decoder.cpp
 
 HEADERS  += qtmain.h \
     Algorithm/Algorithm.h \
-    Decoder/Mpg123Decoder.h \
     Decoder/mpg123.h \
     Decoder/MP3Decoder.h
 
