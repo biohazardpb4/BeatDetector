@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
         // phonon setup
         QApplication app(argc, argv);
-        app.setApplicationName("BeatDetector");
+        app.setApplicationName("Beat Detector v0.000001");
         app.setQuitOnLastWindowClosed(true);
 
         MainWindow window;

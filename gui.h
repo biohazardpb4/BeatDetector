@@ -25,6 +25,7 @@ private:
     Ui::MainWindow *ui;
 
     QGraphicsView *graphicsView;
+    QGraphicsScene *graphicsScene;
 
     float ** algorithmResults;
     int * algorithmResultLengths;

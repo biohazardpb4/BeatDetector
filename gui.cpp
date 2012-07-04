@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->resize(800, 600);
+    this->setWindowTitle("Beat Detector v0.000001");
 }
 
 MainWindow::~MainWindow()
@@ -28,13 +30,15 @@ void MainWindow::setNumAlgorithms(int numAlgorithms) {
 }
 
 void MainWindow::updateAlgorithmRendering(float seekPosition) {
-    QGraphicsScene scene;
-    this->graphicsView = new QGraphicsView(&scene, this);
+    this->graphicsScene = new QGraphicsScene();
 
-    QGraphicsRectItem *rect = scene.addRect(QRectF(0, 0, 100, 100));
-    QGraphicsItem *item = scene.itemAt(50, 50);
+    this->graphicsView = new QGraphicsView(this->graphicsScene, this);
+    this->graphicsView->resize(760, 540);
+    this->graphicsView->move(20, 40);
 
-    scene.addItem(item);
+    QRect rect = QRect(100,20,100,100);
+    this->graphicsScene->addRect(rect, QPen(Qt::black), QBrush(Qt::green));
 
+    this->graphicsView->update();
     this->graphicsView->show();
 }
