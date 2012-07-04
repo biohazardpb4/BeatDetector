@@ -26,7 +26,7 @@ private:
 	// our current mp3 file
 	MP3File mp3File;
 	inline int readBuffer();
-	inline void openFile(char *);
+    inline void openFile(const char *);
 	void cleanup(mpg123_handle *);
 
 public:
@@ -35,7 +35,7 @@ public:
 	virtual ~MP3Decoder();
 
 	// loads the file passed in	
-	void loadFile(char *);
+    void loadFile(const char *);
 	unsigned char * getSampleBuffer();
 	size_t getSampleBufferSize();
 };

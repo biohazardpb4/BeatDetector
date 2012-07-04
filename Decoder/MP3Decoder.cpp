@@ -24,7 +24,7 @@ MP3Decoder::~MP3Decoder() {
 	this->cleanup(mp3File.handle);
 }
 
-void MP3Decoder::loadFile(char * fpath) {
+void MP3Decoder::loadFile(const char *fpath) {
 	printf("loading %s\n", fpath);
 	this->openFile(fpath);
 	printf("MP3 Length: %f\n", mp3File.length);
@@ -58,7 +58,7 @@ inline int MP3Decoder::readBuffer() {
 		return done;
 }
 
-inline void MP3Decoder::openFile(char * filename) {
+inline void MP3Decoder::openFile(const char *filename) {
 	mpg123_handle *mh = NULL;
 	int  channels = 0, encoding = 0;
 	long rate = 0;

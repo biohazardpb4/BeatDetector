@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <string>
 
 #include "Algorithm.h"
 
-Algorithm::Algorithm() {
-	printf("Algorithm created");
+Algorithm::Algorithm(string name) {
+    this->name = name;
+    this->beatOutput = new vector<float>();
 }
 
 Algorithm::~Algorithm() {
-	printf("Algorithm destroyed");
+    delete(this->beatOutput);
 }
 
 unsigned char * Algorithm::sampleData = NULL;
@@ -18,3 +20,6 @@ void Algorithm::setSampleBuffer(unsigned char * buf, long size) {
 	sampleDataSize = size;
 }
 
+void Algorithm::cleanup() {
+    delete(Algorithm::sampleData);
+}

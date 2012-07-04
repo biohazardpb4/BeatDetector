@@ -1,5 +1,5 @@
 #include "gui.h"
-#include "ui_qtmain.h"
+#include "ui_gui.h"
 #include <QGraphicsScene>
 
 MainWindow::MainWindow(QWidget *parent) :
