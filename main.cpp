@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "qtmain.h"
+#include "gui.h"
 #include "Decoder/MP3Decoder.h"
 #include "Algorithm/Algorithm.h"
 #include <phonon/mediaobject.h>
@@ -32,6 +32,7 @@ int main(int argc, char **argv)
 
         MainWindow window;
         window.show();
+        window.updateAlgorithmRendering(0);
 
         Phonon::MediaObject *music =
                 Phonon::createPlayer(Phonon::MusicCategory,
