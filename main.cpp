@@ -20,25 +20,28 @@ void decode(string fname) {
     Algorithm::setSampleBuffer(samples, numSamples);
 }
 
-vector<Algorithm*>* process() {
+vector<vector<float>*>* process() {
     vector<Algorithm*> * algos = new vector<Algorithm*>();
+    vector<vector<float>*>* results = new vector<vector<float>*>();
 
     // set different algos
     algos->push_back(new SimplePowerHistory());
 
-    for(int i = 0; i < algos->size(); i++)
+    for(int i = 0; i < algos->size(); i++) {
         (*algos)[i]->process();
+        results->push_back((*algos)[i]->beatOutput);
+    }
 
     // look at algo output
     std::cout.flush();
 
-    return algos;
+    return results;
 }
 
 int main(int argc, char **argv)
 {
     decode(string(argv[1]));
-    vector<Algorithm*> * algos = process();
+    vector<vector<float>*>* results = process();
 
     // phonon setup
     QApplication app(argc, argv);
@@ -46,6 +49,7 @@ int main(int argc, char **argv)
     app.setQuitOnLastWindowClosed(true);
 
     MainWindow window;
+    window.setAlgorithmResults(results);
     window.show();
     window.updateAlgorithmRendering(0);
 

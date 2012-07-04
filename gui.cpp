@@ -17,16 +17,8 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::setAlgorithmResults(float ** results) {
+void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) {
     this->algorithmResults = results;
-}
-
-void MainWindow::setAlgorithmResultLengths(int * resultLengths) {
-    this->algorithmResultLengths = resultLengths;
-}
-
-void MainWindow::setNumAlgorithms(int numAlgorithms) {
-    this->numAlgorithms = numAlgorithms;
 }
 
 void MainWindow::updateAlgorithmRendering(float seekPosition) {

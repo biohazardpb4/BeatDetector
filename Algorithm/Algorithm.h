@@ -17,14 +17,14 @@ using namespace std;
 class Algorithm {
 protected:
 	static unsigned char * sampleData;
-	static long sampleDataSize;
-    std::vector<float>* beatOutput;
+    static long sampleDataSize;
 
 public:
     Algorithm(string);
 	~Algorithm();
 
     string name;
+    std::vector<float>* beatOutput;
 
 	// pass the sample buffer
     static void cleanup();
@@ -39,8 +39,8 @@ public:
 
     virtual void process() {
         printf("running algorithm: %s\n", this->name.c_str());
-        //for(int i = 0; i < sampleDataSize; i++)
-            //printf("power history algo: %d is %d\n", i, sampleData[i]);
+        for(int i = 0; i < 100; i++)
+            beatOutput->push_back(float(i)/100);
 	}
 };
 

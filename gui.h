@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <vector>
 
 namespace Ui {
 class MainWindow;
@@ -16,9 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setAlgorithmResults(float **);
-    void setAlgorithmResultLengths(int *);
-    void setNumAlgorithms(int);
+    void setAlgorithmResults(std::vector<std::vector<float>*>*);
     void updateAlgorithmRendering(float);
     
 private:
@@ -27,9 +26,7 @@ private:
     QGraphicsView *graphicsView;
     QGraphicsScene *graphicsScene;
 
-    float ** algorithmResults;
-    int * algorithmResultLengths;
-    int numAlgorithms;
+    std::vector<std::vector<float>*>* algorithmResults;
 };
 
 #endif // QTMAIN_H
