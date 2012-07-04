@@ -1,6 +1,8 @@
 BeatDetector
 ============
 
+BeatDetector is protected by the WTFPL, so have at it
+
 beat detection algorithm tester
 
 required libraries (sudo apt-get install xxx in Ubuntu)
