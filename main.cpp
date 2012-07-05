@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <QTimer>
 
 void cleanup() {
     Algorithm::cleanup();
@@ -56,7 +57,7 @@ int main(int argc, char **argv)
     Phonon::MediaObject *music =
             Phonon::createPlayer(Phonon::MusicCategory,
                     Phonon::MediaSource(argv[1]));
-    //music->play();
+    music->play();
 
     return app.exec();
 }

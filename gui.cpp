@@ -1,6 +1,7 @@
 #include "gui.h"
 #include "ui_gui.h"
 #include <QGraphicsScene>
+#include <stdio.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->resize(800, 600);
     this->setWindowTitle("Beat Detector v0.000001");
+    this->timer = new QTimer(this);
+    this->connect(timer, SIGNAL(timeout()), this, SLOT(updateGraphics()));
+    timer->setInterval( 50 );
+    timer->start();
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +26,12 @@ void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) 
     this->algorithmResults = results;
 }
 
+void MainWindow::updateGraphics() {
+    float r = rand();
+    updateAlgorithmRendering(r);
+    printf("moving to: %f\n", r);
+}
+
 void MainWindow::updateAlgorithmRendering(float seekPosition) {
     this->graphicsScene = new QGraphicsScene();
 
@@ -28,7 +39,7 @@ void MainWindow::updateAlgorithmRendering(float seekPosition) {
     this->graphicsView->resize(760, 540);
     this->graphicsView->move(20, 40);
 
-    QRect rect = QRect(100,20,100,100);
+    QRect rect = QRect(seekPosition * 1000,seekPosition * 20,100,100);
     this->graphicsScene->addRect(rect, QPen(Qt::black), QBrush(Qt::green));
 
     this->graphicsView->update();

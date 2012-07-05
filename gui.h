@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsView>
 #include <vector>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -25,8 +26,12 @@ private:
 
     QGraphicsView *graphicsView;
     QGraphicsScene *graphicsScene;
+    QTimer *timer;
 
     std::vector<std::vector<float>*>* algorithmResults;
+
+private slots:
+    void updateGraphics();
 };
 
 #endif // QTMAIN_H
