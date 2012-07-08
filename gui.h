@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QGraphicsRectItem>
 #include <vector>
 #include <QTimer>
 #include <phonon/mediaobject.h>
@@ -26,6 +27,7 @@ public:
     
 private:
     static const float TRACK_WIDTH_PIXELS;
+    static const float END_BAR_POSITION;
 
     Ui::MainWindow *ui;
 
@@ -36,6 +38,7 @@ private:
 
     std::vector<std::vector<float>*>* algorithmResults;
     std::vector<std::vector<QRect*>*>* beatFlags;
+    QGraphicsRectItem* endBar;
 
 private slots:
     void updateGraphics();

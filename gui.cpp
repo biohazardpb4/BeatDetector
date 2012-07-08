@@ -5,6 +5,7 @@
 #include <iostream>
 
 const float MainWindow::TRACK_WIDTH_PIXELS = 10000.0f;
+const float MainWindow::END_BAR_POSITION = 20.0f;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->graphicsView = new QGraphicsView(this->graphicsScene, this);
     this->graphicsView->resize(760, 540);
     this->graphicsView->move(20, 40);
+
+    this->endBar = this->graphicsScene->addRect(
+                QRectF(MainWindow::END_BAR_POSITION, 0, 10, 500),
+                QPen(Qt::black), QBrush(Qt::red));
 }
 
 MainWindow::~MainWindow()
@@ -66,11 +71,15 @@ void MainWindow::updateGraphics() {
   *
   */
 void MainWindow::updateAlgorithmRendering(float seekPosition) {
-
     QRectF rect = this->graphicsView->sceneRect();
+
     QPointF point = rect.topLeft();
     QPointF newPoint(seekPosition * rect.width(), point.y());
     QRectF newRect(rect);
     newRect.moveTo(newPoint);
     this->graphicsView->setSceneRect(newRect);
+
+    // move the baseline rectangle
+    float newX = seekPosition * rect.width() + MainWindow::END_BAR_POSITION;
+    this->endBar->moveBy(newX - this->endBar->x() ,0);
 }

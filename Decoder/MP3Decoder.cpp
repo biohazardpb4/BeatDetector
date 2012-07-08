@@ -46,7 +46,7 @@ size_t MP3Decoder::getSampleBufferSize() {
 
 inline int MP3Decoder::readBuffer() {
 	size_t done = 0;
-	int err = mpg123_read(mp3File.handle, mp3File.buffer, mp3File.buffer_size, &done);
+    int err = mpg123_read(mp3File.handle, mp3File.buffer, mp3File.buffer_size, &done);
 	mp3File.leftSamples = done/2;
 	mp3File.offset = 0;
 
@@ -80,7 +80,7 @@ inline void MP3Decoder::openFile(const char *filename) {
         
 	size_t buffer_size = mpg123_length(mh) * channels;//mpg123_outblock( mh );
 	printf("buffer size: %ld\n", buffer_size);
-	unsigned char* buffer = (unsigned char*)malloc(buffer_size);
+    unsigned char* buffer = (unsigned char*)malloc(buffer_size);
 	size_t done = 0;
 	int samples = 0;
         

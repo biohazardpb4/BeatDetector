@@ -18,7 +18,7 @@ private:
 	        long rate;
 	        float length;
 	        size_t buffer_size;
-	        unsigned char* buffer;
+            unsigned char* buffer;
 	        int leftSamples;
 	        int offset;
 	};
@@ -36,7 +36,7 @@ public:
 
 	// loads the file passed in	
     void loadFile(const char *);
-	unsigned char * getSampleBuffer();
+    unsigned char * getSampleBuffer();
 	size_t getSampleBufferSize();
 };
 
