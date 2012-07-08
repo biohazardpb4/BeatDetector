@@ -20,6 +20,9 @@ void Algorithm::setSampleBuffer(unsigned char * buf, long size) {
 	sampleDataSize = size;
 }
 
+long Algorithm::getSampleDataSize() { return Algorithm::sampleDataSize; }
+unsigned char* Algorithm::getSampleData() { return Algorithm::sampleData; }
+
 void Algorithm::cleanup() {
     delete(Algorithm::sampleData);
 }

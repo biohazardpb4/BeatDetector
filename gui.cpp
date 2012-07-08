@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->resize(800, 600);
-    this->setWindowTitle("Beat Detector v0.000001");
+    this->setWindowTitle("Beat Detector v0.1A");
     this->timer = new QTimer(this);
     this->connect(timer, SIGNAL(timeout()), this, SLOT(updateGraphics()));
     timer->setInterval( 50 );
@@ -40,13 +40,15 @@ void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) 
 
     this->algorithmResults = results;
     this->beatFlags = new std::vector<std::vector<QRect*>*>();
+    // calculate height for each algo row based on graphics view height
+    int algoRowHeight = (this->graphicsView->height() - 40)/results->size();
 
     for(int i = 0; i < results->size(); i++) {
         std::vector<float>* currentFlags = (*results)[i];
         std::vector<QRect*> * newRects = new std::vector<QRect*>();
         for(int j = 0; j < currentFlags->size(); j++) {
             float leftPixelPos = (*currentFlags)[j] * TRACK_WIDTH_PIXELS;
-            newRects->push_back(new QRect(leftPixelPos, 0, 10, 100));
+            newRects->push_back(new QRect(leftPixelPos, algoRowHeight*i, 10, algoRowHeight-10));
             this->graphicsScene->addRect(*(*newRects)[j], QPen(Qt::black), QBrush(Qt::green));
         }
         this->beatFlags->push_back(newRects);
@@ -62,8 +64,8 @@ void MainWindow::updateGraphics() {
     if(this->music != NULL)
         r = float(this->music->currentTime())/this->music->totalTime();
     updateAlgorithmRendering(r);
-    printf("moving to: %f\n", r);
-    std::cout.flush();
+    //printf("moving to: %f\n", r);
+    //std::cout.flush();
 }
 
 /**
