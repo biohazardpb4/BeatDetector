@@ -2,6 +2,9 @@
 #include "ui_gui.h"
 #include <QGraphicsScene>
 #include <stdio.h>
+#include <iostream>
+
+const float MainWindow::TRACK_WIDTH_PIXELS = 10000.0f;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(timer, SIGNAL(timeout()), this, SLOT(updateGraphics()));
     timer->setInterval( 50 );
     timer->start();
+
+    // set up graphics
+    this->graphicsScene = new QGraphicsScene();
+    this->graphicsView = new QGraphicsView(this->graphicsScene, this);
+    this->graphicsView->resize(760, 540);
+    this->graphicsView->move(20, 40);
 }
 
 MainWindow::~MainWindow()
@@ -23,25 +32,45 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) {
+
     this->algorithmResults = results;
+    this->beatFlags = new std::vector<std::vector<QRect*>*>();
+
+    for(int i = 0; i < results->size(); i++) {
+        std::vector<float>* currentFlags = (*results)[i];
+        std::vector<QRect*> * newRects = new std::vector<QRect*>();
+        for(int j = 0; j < currentFlags->size(); j++) {
+            float leftPixelPos = (*currentFlags)[j] * TRACK_WIDTH_PIXELS;
+            newRects->push_back(new QRect(leftPixelPos, 0, 10, 100));
+            this->graphicsScene->addRect(*(*newRects)[j], QPen(Qt::black), QBrush(Qt::green));
+        }
+        this->beatFlags->push_back(newRects);
+    }
+}
+
+void MainWindow::setMusicPlayer(Phonon::MediaObject* music) {
+    this->music = music;
 }
 
 void MainWindow::updateGraphics() {
-    float r = rand();
+    float r = 0;
+    if(this->music != NULL)
+        r = float(this->music->currentTime())/this->music->totalTime();
     updateAlgorithmRendering(r);
     printf("moving to: %f\n", r);
+    std::cout.flush();
 }
 
+/**
+  * Draw the beat flags at the current location.
+  *
+  */
 void MainWindow::updateAlgorithmRendering(float seekPosition) {
-    this->graphicsScene = new QGraphicsScene();
 
-    this->graphicsView = new QGraphicsView(this->graphicsScene, this);
-    this->graphicsView->resize(760, 540);
-    this->graphicsView->move(20, 40);
-
-    QRect rect = QRect(seekPosition * 1000,seekPosition * 20,100,100);
-    this->graphicsScene->addRect(rect, QPen(Qt::black), QBrush(Qt::green));
-
-    this->graphicsView->update();
-    this->graphicsView->show();
+    QRectF rect = this->graphicsView->sceneRect();
+    QPointF point = rect.topLeft();
+    QPointF newPoint(seekPosition * rect.width(), point.y());
+    QRectF newRect(rect);
+    newRect.moveTo(newPoint);
+    this->graphicsView->setSceneRect(newRect);
 }

@@ -28,7 +28,7 @@ vector<vector<float>*>* process() {
     // set different algos
     algos->push_back(new SimplePowerHistory());
 
-    for(int i = 0; i < algos->size(); i++) {
+    for(unsigned int i = 0; i < algos->size(); i++) {
         (*algos)[i]->process();
         results->push_back((*algos)[i]->beatOutput);
     }
@@ -49,14 +49,16 @@ int main(int argc, char **argv)
     app.setApplicationName("Beat Detector v0.000001");
     app.setQuitOnLastWindowClosed(true);
 
-    MainWindow window;
-    window.setAlgorithmResults(results);
-    window.show();
-    window.updateAlgorithmRendering(0);
-
+    // create music player
     Phonon::MediaObject *music =
             Phonon::createPlayer(Phonon::MusicCategory,
                     Phonon::MediaSource(argv[1]));
+
+    MainWindow window;
+    window.setAlgorithmResults(results);
+    window.show();
+    window.setMusicPlayer(music);
+
     music->play();
 
     return app.exec();
