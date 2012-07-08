@@ -34,10 +34,8 @@ vector<vector<float>*>* process() {
     vector<vector<float>*>* results = new vector<vector<float>*>();
 
     // set different algos
-    algos->push_back(new SimplePowerHistory(22.0));
-    algos->push_back(new SimplePowerHistory(21.0));
-    algos->push_back(new SimplePowerHistory(20.0));
-    algos->push_back(new SimplePowerHistory(10.0));
+    algos->push_back(new SimplePowerHistory(16.64,10));
+    algos->push_back(new SimplePowerHistory(16.64,9));
 
     for(unsigned int i = 0; i < algos->size(); i++) {
         (*algos)[i]->process();

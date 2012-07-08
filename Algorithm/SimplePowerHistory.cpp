@@ -1,8 +1,9 @@
 #include "SimplePowerHistory.h"
 
 // first try at the algorithm to detect teh beatz
-SimplePowerHistory::SimplePowerHistory(float cutoff):Algorithm("Simple Power History") {
+SimplePowerHistory::SimplePowerHistory(float cutoff, int trailingAverageLength):Algorithm("Simple Power History") {
     this->cutoff = cutoff;
+    this->trailingAverageLength=trailingAverageLength;
 }
 
 void SimplePowerHistory::process() {
@@ -11,9 +12,9 @@ void SimplePowerHistory::process() {
 
     int numSamples = Algorithm::getSampleDataSize();
     const int SAMPLES_PER_INTERVAL = 1024;
-    const int TRAILING_AVERAGE_LENGTH = 10;
+    int TRAILING_AVERAGE_LENGTH = trailingAverageLength;
     // approximately 200 BPM max
-    const int MIN_AVERAGES_BETWEEN = 50;
+    const int MIN_AVERAGES_BETWEEN = 40;
     float ENERGY_CUTOFF = cutoff;
 
     // the average of every SAMPLES_PER_INTERVAL samples will be recorded for analysis

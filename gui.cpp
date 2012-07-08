@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 
-const float MainWindow::TRACK_WIDTH_PIXELS = 10000.0f;
+const float MainWindow::TRACK_WIDTH_PIXELS = 20000.0f;
 const float MainWindow::END_BAR_POSITION = 20.0f;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("Beat Detector v0.1A");
     this->timer = new QTimer(this);
     this->connect(timer, SIGNAL(timeout()), this, SLOT(updateGraphics()));
-    timer->setInterval( 50 );
+    timer->setInterval( 10 );
     timer->start();
 
     // set up graphics

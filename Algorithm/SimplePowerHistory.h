@@ -7,8 +7,9 @@
 class SimplePowerHistory : public Algorithm {
 private:
     float cutoff;
+    int trailingAverageLength;
 public:
-    SimplePowerHistory(float);
+    SimplePowerHistory(float, int);
     virtual void process();
 };
 
