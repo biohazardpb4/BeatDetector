@@ -22,8 +22,11 @@ public:
     ~MainWindow();
 
     void setAlgorithmResults(std::vector<std::vector<float>*>*);
+    void setAlgorithmSamples(unsigned char *);
+    void setAlgorithmSampleSize(long);
     void setMusicPlayer(Phonon::MediaObject*);
     void updateAlgorithmRendering(float);
+    void drawSamples();
     
 private:
     static const float TRACK_WIDTH_PIXELS;
@@ -37,6 +40,8 @@ private:
     Phonon::MediaObject* music;
 
     std::vector<std::vector<float>*>* algorithmResults;
+    unsigned char * samples;
+    long numSamples;
     std::vector<std::vector<QRect*>*>* beatFlags;
     QGraphicsRectItem* endBar;
 

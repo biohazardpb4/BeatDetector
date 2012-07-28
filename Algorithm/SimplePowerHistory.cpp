@@ -20,14 +20,14 @@ void SimplePowerHistory::process() {
     // the average of every SAMPLES_PER_INTERVAL samples will be recorded for analysis
     float *interval_averages = new float[numSamples / SAMPLES_PER_INTERVAL];
     unsigned char *sample_buffer = Algorithm::getSampleData();
-    unsigned short sample;
+    short sample;
     int numIntervals = numSamples/SAMPLES_PER_INTERVAL;
 
     for(int i = 0; i < numIntervals; i++) {
         interval_averages[i] = 0;
         for(int j = 0; j < SAMPLES_PER_INTERVAL/2; j++) {
             sample = sample_buffer[SAMPLES_PER_INTERVAL*i + j*2];
-            interval_averages[i] += sample;
+            interval_averages[i] += sample > 0 ? sample : -sample;
         }
         interval_averages[i] /= SAMPLES_PER_INTERVAL;
         //printf("interval average for %d: %d\n", i, interval_averages[i]);

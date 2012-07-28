@@ -3,6 +3,8 @@
 #include <QGraphicsScene>
 #include <stdio.h>
 #include <iostream>
+#include <QImage>
+#include <QPixmap>
 
 const float MainWindow::TRACK_WIDTH_PIXELS = 20000.0f;
 const float MainWindow::END_BAR_POSITION = 20.0f;
@@ -53,6 +55,34 @@ void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) 
         }
         this->beatFlags->push_back(newRects);
     }
+}
+
+void MainWindow::setAlgorithmSamples(unsigned char * samples) {
+    this->samples = samples;
+}
+
+void MainWindow::setAlgorithmSampleSize(long numSamples) {
+    this->numSamples = numSamples;
+}
+
+void MainWindow::drawSamples() {
+
+    short sampleOne, sampleTwo;
+    double sampleWidth = (double)this->numSamples / MainWindow::TRACK_WIDTH_PIXELS;
+    QImage sampleImage((int)MainWindow::TRACK_WIDTH_PIXELS, 500, QImage::Format_ARGB32);
+    QPainter painter;
+    painter.setPen(QPen(Qt::blue));
+
+    painter.begin(&sampleImage);
+    for(long i = 2; i < TRACK_WIDTH_PIXELS; i++) {
+        sampleOne = this->samples[(((long)(sampleWidth*i) >> 1) << 1) - 2];
+        sampleTwo = this->samples[((long)(sampleWidth*i) >> 1) << 1];
+
+        painter.drawLine(i-1, 2*sampleOne, i, 2*sampleTwo);
+    }
+    painter.end();
+
+    this->graphicsScene->addPixmap(QPixmap::fromImage(sampleImage));
 }
 
 void MainWindow::setMusicPlayer(Phonon::MediaObject* music) {

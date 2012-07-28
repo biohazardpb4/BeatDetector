@@ -36,6 +36,8 @@ vector<vector<float>*>* process() {
     // set different algos
     algos->push_back(new SimplePowerHistory(16.64,10));
     algos->push_back(new SimplePowerHistory(16.64,9));
+    algos->push_back(new SimplePowerHistory(15,9));
+    algos->push_back(new SimplePowerHistory(10,9));
 
     for(unsigned int i = 0; i < algos->size(); i++) {
         (*algos)[i]->process();
@@ -64,6 +66,12 @@ int main(int argc, char **argv)
                                  Phonon::MediaSource(argv[1]));
 
     MainWindow window;
+    // draw the samples
+    window.setAlgorithmSamples(Algorithm::getSampleData());
+    window.setAlgorithmSampleSize(Algorithm::getSampleDataSize());
+    window.drawSamples();
+
+    // set the beat flag results
     window.setAlgorithmResults(results);
     window.show();
     window.setMusicPlayer(music);
