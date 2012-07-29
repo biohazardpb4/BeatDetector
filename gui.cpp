@@ -49,7 +49,7 @@ void MainWindow::setAlgorithmResults(std::vector<std::vector<float>*>* results) 
         std::vector<float>* currentFlags = (*results)[i];
         std::vector<QRect*> * newRects = new std::vector<QRect*>();
         for(int j = 0; j < currentFlags->size(); j++) {
-            float leftPixelPos = (*currentFlags)[j] * TRACK_WIDTH_PIXELS;
+            float leftPixelPos = (*currentFlags)[j] * TRACK_WIDTH_PIXELS + END_BAR_POSITION;
             newRects->push_back(new QRect(leftPixelPos, algoRowHeight*i, 10, algoRowHeight-10));
             this->graphicsScene->addRect(*(*newRects)[j], QPen(Qt::black), QBrush(Qt::green));
         }
@@ -68,17 +68,21 @@ void MainWindow::setAlgorithmSampleSize(long numSamples) {
 void MainWindow::drawSamples() {
 
     short sampleOne, sampleTwo;
-    double sampleWidth = (double)this->numSamples / MainWindow::TRACK_WIDTH_PIXELS;
+    long sampleIndex = 0;
+    double sampleWidth = (double)this->numSamples / MainWindow::TRACK_WIDTH_PIXELS / 2;
     QImage sampleImage((int)MainWindow::TRACK_WIDTH_PIXELS, 500, QImage::Format_ARGB32);
     QPainter painter;
-    painter.setPen(QPen(Qt::blue));
+    QPen pen(Qt::blue);
+    pen.setWidth(2);
+    painter.setPen(pen);
 
     painter.begin(&sampleImage);
     for(long i = 2; i < TRACK_WIDTH_PIXELS; i++) {
-        sampleOne = this->samples[(((long)(sampleWidth*i) >> 1) << 1) - 2];
-        sampleTwo = this->samples[((long)(sampleWidth*i) >> 1) << 1];
+        sampleOne = ((short*)this->samples)[sampleIndex];
+        sampleIndex = (((long)(sampleWidth*i) >> 1) << 1);
+        sampleTwo = ((short*)this->samples)[sampleIndex];
 
-        painter.drawLine(i-1, 2*sampleOne, i, 2*sampleTwo);
+        painter.drawLine(i-1 + END_BAR_POSITION, (sampleOne >> 8)+250, i + END_BAR_POSITION, (sampleTwo >> 8)+250);
     }
     painter.end();
 

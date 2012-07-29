@@ -23,14 +23,16 @@ SOURCES +=\
     Decoder/MP3Decoder.cpp \
     main.cpp \
     gui.cpp \
-    Algorithm/SimplePowerHistory.cpp
+    Algorithm/SimplePowerHistory.cpp \
+    Algorithm/CompressedPowerHistory.cpp
 
 HEADERS  += gui.h \
     Algorithm/Algorithm.h \
     Decoder/mpg123.h \
     Decoder/MP3Decoder.h \
     gui.h \
-    Algorithm/SimplePowerHistory.h
+    Algorithm/SimplePowerHistory.h \
+    Algorithm/CompressedPowerHistory.h
 
 FORMS    += \
     gui.ui

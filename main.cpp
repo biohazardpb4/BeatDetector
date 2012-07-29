@@ -3,6 +3,7 @@
 #include "Decoder/MP3Decoder.h"
 #include "Algorithm/Algorithm.h"
 #include "Algorithm/SimplePowerHistory.h"
+#include "Algorithm/CompressedPowerHistory.h"
 #include <phonon/mediaobject.h>
 #include <vector>
 #include <iostream>
@@ -34,10 +35,10 @@ vector<vector<float>*>* process() {
     vector<vector<float>*>* results = new vector<vector<float>*>();
 
     // set different algos
-    algos->push_back(new SimplePowerHistory(16.64,10));
-    algos->push_back(new SimplePowerHistory(16.64,9));
-    algos->push_back(new SimplePowerHistory(15,9));
-    algos->push_back(new SimplePowerHistory(10,9));
+    algos->push_back(new SimplePowerHistory(1.5,10));
+    algos->push_back(new CompressedPowerHistory(1.5, 0.25, 10));
+    algos->push_back(new CompressedPowerHistory(1.5, 0.5, 10));// <-- best so far!
+    algos->push_back(new CompressedPowerHistory(1.5, 0.75, 10));
 
     for(unsigned int i = 0; i < algos->size(); i++) {
         (*algos)[i]->process();

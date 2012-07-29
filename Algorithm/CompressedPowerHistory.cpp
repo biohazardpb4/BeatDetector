@@ -1,12 +1,14 @@
-#include "SimplePowerHistory.h"
+#include "CompressedPowerHistory.h"
+#include <math.h>
 
 // first try at the algorithm to detect teh beatz
-SimplePowerHistory::SimplePowerHistory(float cutoff, int trailingAverageLength):Algorithm("Simple Power History") {
+CompressedPowerHistory::CompressedPowerHistory(float cutoff, float compression, int trailingAverageLength):Algorithm("Compressed Power History") {
     this->cutoff = cutoff;
     this->trailingAverageLength=trailingAverageLength;
+    this->compression = compression;
 }
 
-void SimplePowerHistory::process() {
+void CompressedPowerHistory::process() {
 
     printf("running algorithm: %s\n", this->name.c_str());
 
@@ -21,13 +23,17 @@ void SimplePowerHistory::process() {
     float *interval_averages = new float[numSamples / SAMPLES_PER_INTERVAL];
     short *sample_buffer = (short *)Algorithm::getSampleData();
     short sample;
+    double norm;
     int numIntervals = numSamples/SAMPLES_PER_INTERVAL;
 
     for(int i = 0; i < numIntervals; i++) {
         interval_averages[i] = 0;
         for(int j = 0; j < SAMPLES_PER_INTERVAL/2; j++) {
             sample = sample_buffer[SAMPLES_PER_INTERVAL*i + j*2];
-            interval_averages[i] += sample > 0 ? sample : -sample;
+            sample = sample > 0 ? sample : -sample;
+            norm = (double)sample / 32768;
+            norm = 1.0 - pow(1.0 - norm, this->compression);
+            interval_averages[i] += norm * 32768;
         }
         interval_averages[i] /= SAMPLES_PER_INTERVAL;
         //printf("interval average for %d: %d\n", i, interval_averages[i]);
